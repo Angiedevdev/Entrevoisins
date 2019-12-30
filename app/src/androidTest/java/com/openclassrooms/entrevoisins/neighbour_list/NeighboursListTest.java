@@ -35,6 +35,7 @@ public class NeighboursListTest {
 
     private ListNeighbourActivity mActivity;
 
+
     @Rule
     public ActivityTestRule<ListNeighbourActivity> mActivityRule =
             new ActivityTestRule(ListNeighbourActivity.class);
