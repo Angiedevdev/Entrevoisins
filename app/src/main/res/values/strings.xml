@@ -2,4 +2,15 @@
     <string name="app_name">Entrevoisins</string>
     <string name="tab_neighbour_title">My neighbours</string>
     <string name="tab_favorites_title">Favorites</string>
+    <string name="name_neighbour">AndroidBug</string>
+    <string name="phone_neighbour">+33 06 00 00 00 00</string>
+    <string name="adress_neighbour">5 place of AndroidTown, 00000 Smarty</string>
+    <string name="url_neighbour">https://facebook/AndroidBug.com</string>
+    <string name="titre_description">About me</string>
+    <string name="describe_me">Lorem Ipsum du Neighbourg</string>
+    <string name="content_button_arrow_backward">BackWard arrow button</string>
+    <string name="icon_place">icon Adress of Neighbour</string>
+    <string name="icon_phone">icon Phone number of Neighbour</string>
+    <string name="icon_url">icon URL neighbour </string>
+    <string name="photo_neighbour">Photo Neighbour</string>
 </resources>

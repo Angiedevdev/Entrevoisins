@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -17,4 +17,51 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="FloatingActionButton.default" parent="AppTheme">
+        <item name="android:src">@drawable/ic_star_border_white_24dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:elevation">5dp</item>
+    </style>
+
+    <style name="AppTheme.apparenceTitle" parent="AppTheme">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:text">@string/name_neighbour</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:layout_marginLeft">50dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_gravity">bottom</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:layout_marginLeft">20dp</item>
+
+    </style>
+
+    <style name="TextAppearance.AppCompat.Headline." parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textSize">30dp</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textAlignment">textStart</item>
+        <item name="android:layout_marginBottom">25dp</item>
+    </style>
+
+    <style name="CardView." parent="Base.CardView">
+        <item name="cardCornerRadius">5dp</item>
+        <item name="cardElevation">5dp</item>
+        <item name="cardUseCompatPadding">true</item>
+    </style>
+
+    <style name="ImageView">
+        <item name="android:background">@color/none_background</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:src">@drawable/ic_arrow_back_white_35dp</item>
+    </style>
+
 </resources>
+
+

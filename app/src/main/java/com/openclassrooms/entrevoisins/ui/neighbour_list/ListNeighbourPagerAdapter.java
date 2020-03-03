@@ -4,21 +4,30 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-
 public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
 
     public ListNeighbourPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
-    /**
+   /**
      * getItem is called to instantiate the fragment for the given page.
      * @param position
      * @return
      */
     @Override
     public Fragment getItem(int position) {
-        return NeighbourFragment.newInstance();
+        switch (position){
+            case 0 :
+                return NeighbourFragment.newInstance();
+
+            case 1 :
+                return NeighbourFavoritesFragment.newInstance();
+
+            default:
+                return null;
+        }
+
     }
 
     /**
@@ -27,6 +36,6 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return 1;
+        return 2;
     }
 }
