@@ -1,15 +1,14 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -23,10 +22,6 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/**
- * This apps is created by Angie, in 02 2020.
- * Entrevoisins. Developped since formation.
- */
 
 public class DetailsNeighbourActivity extends AppCompatActivity {
 
@@ -46,44 +41,85 @@ public class DetailsNeighbourActivity extends AppCompatActivity {
     TextView mPhoneNeighbour;
     @BindView(R.id.textView_url_neighbour)
     TextView mURLNeighbour;
-    //@BindView(R.id.toolbar)
-    //Toolbar mToolbar;
 
     private Neighbour mNeighbour;
     private NeighbourApiService mApiService;
 
     public static final String EXTRA_NEIGHBOUR = "Neighbour";
 
-    public static String NEIGHBOUR_ON_FAVORITES = "Vous avez un nouveau voisin favori";
-    public static String NEIGHBOUR_OUT_FAVORITES = "Oh, ce voisin n'est plus dans vos favoris";
+    private static final String NEIGHBOUR_ON_FAVORITES = "Vous avez un nouveau voisin favori";
+    private static final String NEIGHBOUR_OUT_FAVORITES = "Oh, ce voisin n'est plus dans vos favoris";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_neighbour);
         ButterKnife.bind(this);
-        //setSupportActionBar(mToolbar);
 
-        getApiService();
-        getNeighbourParcelable();
-        getDetailsNeighbour();
+        configureNeighbourDetail();
         changeStatusFavorites();
         returnHome();
     }
 
+    /**
+     * Getting all elements for details of neighbour. This method was created for cleaning the method onCreate.
+     */
+    private void configureNeighbourDetail(){
+        getApiService();
+        getNeighbourParcelable();
+        getDetailsNeighbour();
+    }
+
+    /**
+     * When user click on star, neighbour's status changes.
+     */
+    public void changeStatusFavorites(){
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mNeighbour.isFavorite()) {
+                    removeInFavorites();
+                } else {
+                    addInFavorites();
+                }
+            }
+        });
+    }
+
+    /**
+     * When user click on this arrow, he returns to the previous activity.
+     */
     private void returnHome(){
         mArrowBackward.setOnClickListener(view -> {
             this.finish();
         });
     }
 
-    private void getNeighbourParcelable(){
-        mNeighbour = getIntent().getParcelableExtra(EXTRA_NEIGHBOUR);
+    /**
+     * Specifics methods to add/remove in favorites
+     */
+    public void addInFavorites(){
+        mApiService.changeStatusNeighbour(mNeighbour);
+        setFloatingActionButton();
+        toastMessage(NEIGHBOUR_ON_FAVORITES);
     }
 
+    public void removeInFavorites(){
+        mApiService.changeStatusNeighbour(mNeighbour);
+        setFloatingActionButton();
+        toastMessage(NEIGHBOUR_OUT_FAVORITES);
+    }
+
+    /**
+     * Getting all elements for details of neighbour. Uses in configureNeighbourDetail
+     */
     private NeighbourApiService getApiService(){
         mApiService = DI.getNeighbourApiService();
         return mApiService;
+    }
+
+    private void getNeighbourParcelable(){
+        mNeighbour = getIntent().getParcelableExtra(EXTRA_NEIGHBOUR);
     }
 
     private void getDetailsNeighbour(){
@@ -93,35 +129,24 @@ public class DetailsNeighbourActivity extends AppCompatActivity {
                 .apply(RequestOptions.centerCropTransform())
                 .into(mAvatarNeighbour);
         mNameNeighbour2.setText(mNeighbour.getName());
+        setFloatingActionButton();
     }
 
-    public void changeStatusFavorites(){
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mNeighbour.getFavorite()) {
-                    removeOnFavorites();
-                } else {
-                    addOnFavorites();
-                }
-            }
-        });
-    }
-
-    public void addOnFavorites(){
-        //TODO : Notifier mon API Service
-        mApiService.changeStatusNeighbour(mNeighbour);
-        mFloatingActionButton.setImageResource(R.drawable.ic_star_yellow_24dp);
-        toastMessage(NEIGHBOUR_ON_FAVORITES);
-    }
-
-    public void removeOnFavorites(){
-        mApiService.changeStatusNeighbour(mNeighbour);
-        mFloatingActionButton.setImageResource(R.drawable.ic_star_border_white_24dp);
-        toastMessage(NEIGHBOUR_OUT_FAVORITES);
+    /**
+     * Other tools
+     */
+    private void setFloatingActionButton(){
+        if(mNeighbour.isFavorite()) {
+            mFloatingActionButton.setImageResource(R.drawable.ic_star_yellow_24dp);
+        } else {
+            mFloatingActionButton.setImageResource(R.drawable.ic_star_border_white_24dp);
+        }
     }
 
     private void toastMessage(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
+
+
+
 }

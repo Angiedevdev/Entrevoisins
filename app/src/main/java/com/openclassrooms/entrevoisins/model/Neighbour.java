@@ -10,7 +10,7 @@ import java.util.Objects;
  */
 public class Neighbour implements Parcelable{
 
-    /** Identifier */
+    /** Identify */
     private Integer id;
 
     /** Full name */
@@ -19,7 +19,7 @@ public class Neighbour implements Parcelable{
     /** Avatar */
     private String avatarUrl;
 
-    /**Statut favoris*/
+    /**Status favorite*/
     private boolean favorite;
 
     /**
@@ -56,12 +56,12 @@ public class Neighbour implements Parcelable{
         return avatarUrl;
     }
 
-    public  boolean getFavorite(){
+    public  boolean isFavorite(){
         return favorite;
     }
 
-    public void setFavorite(boolean favori){
-        this.favorite = favori;
+    public void setFavorite(boolean favorite){
+        this.favorite = favorite;
     }
 
     @Override
@@ -78,7 +78,7 @@ public class Neighbour implements Parcelable{
     }
 
     /**
-     * Facilitateur de transmission de données entre les deux activités.
+     * Facilitator of data transmission between the two activities.
      */
     public static final Parcelable.Creator<Neighbour> CREATOR = new Parcelable.Creator<Neighbour>() {
         @Override

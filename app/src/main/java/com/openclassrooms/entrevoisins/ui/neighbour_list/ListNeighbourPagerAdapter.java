@@ -27,7 +27,6 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
             default:
                 return null;
         }
-
     }
 
     /**

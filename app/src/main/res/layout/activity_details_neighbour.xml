@@ -34,7 +34,7 @@
                 <ImageView
                     android:id="@+id/photo_neighbour"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="256dp"
                     android:scaleType="centerCrop"
                     android:fitsSystemWindows="true"
                     android:contentDescription="@string/photo_neighbour"

@@ -13,8 +13,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.events.DeleteFavoriteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,10 +28,11 @@ import butterknife.ButterKnife;
 
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Neighbour> mNeighbours;
+    private final List<Neighbour> mNeighboursList;
+    private DummyNeighbourApiService mApiService;
 
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
-        mNeighbours = items;
+        mNeighboursList = items;
     }
 
     @Override
@@ -41,7 +44,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Neighbour neighbour = mNeighbours.get(position);
+        Neighbour neighbour = mNeighboursList.get(position);
         holder.mNeighbourName.setText(neighbour.getName());
         Glide.with(holder.mNeighbourAvatar.getContext())
                 .load(neighbour.getAvatarUrl())
@@ -60,14 +63,19 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+                if (neighbour.isFavorite()) {
+                    //TODO : Attention si Delete depuis Neighbour alors changement statut ET suppression de la liste
+                    EventBus.getDefault().post(new DeleteFavoriteNeighbourEvent(neighbour));
+                } else {
+                    EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+                }
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mNeighbours.size();
+        return mNeighboursList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

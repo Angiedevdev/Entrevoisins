@@ -13,25 +13,28 @@ public interface NeighbourApiService {
     /**
      * Get all my Neighbours
      * @return {@link List}
+     * @return {@link DummyNeighbourApiService}
      */
     List<Neighbour> getNeighbours();
 
     /**
      * Get just my favorits neighbours
+     * @return {@link List}
+     * @return {@link DummyNeighbourApiService}
      */
 
     List<Neighbour> getFavoritesNeighbours();
 
     /**
      * Deletes a neighbour
-     * @param neighbour
+     * @return {@link DummyNeighbourApiService}
      */
 
     void deleteNeighbour(Neighbour neighbour);
 
     /**
      * Change status favorit of neighbour in neighbour not favorit
-     * @param neighbour
+     * @return {@link DummyNeighbourApiService}
      */
     void changeStatusNeighbour(Neighbour neighbour);
 
