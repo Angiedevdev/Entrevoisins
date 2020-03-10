@@ -60,8 +60,8 @@ public class Neighbour implements Parcelable{
         return favorite;
     }
 
-    public void setFavorite(boolean favorite){
-        this.favorite = favorite;
+    public void setFavorite(boolean favori){
+        this.favorite = favori;
     }
 
     @Override

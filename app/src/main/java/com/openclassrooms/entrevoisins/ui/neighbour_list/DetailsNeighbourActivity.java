@@ -47,7 +47,7 @@ public class DetailsNeighbourActivity extends AppCompatActivity {
 
     public static final String EXTRA_NEIGHBOUR = "Neighbour";
 
-    private static final String NEIGHBOUR_ON_FAVORITES = "Vous avez un nouveau voisin favori";
+    private static final String NEIGHBOUR_IN_FAVORITES = "Vous avez un nouveau voisin favori";
     private static final String NEIGHBOUR_OUT_FAVORITES = "Oh, ce voisin n'est plus dans vos favoris";
 
     @Override
@@ -73,6 +73,7 @@ public class DetailsNeighbourActivity extends AppCompatActivity {
     /**
      * When user click on star, neighbour's status changes.
      */
+
     public void changeStatusFavorites(){
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,12 +97,13 @@ public class DetailsNeighbourActivity extends AppCompatActivity {
     }
 
     /**
-     * Specifics methods to add/remove in favorites
+     * Specific method to add/ remove in favorite
      */
+
     public void addInFavorites(){
         mApiService.changeStatusNeighbour(mNeighbour);
         setFloatingActionButton();
-        toastMessage(NEIGHBOUR_ON_FAVORITES);
+        toastMessage(NEIGHBOUR_IN_FAVORITES);
     }
 
     public void removeInFavorites(){
@@ -111,8 +113,8 @@ public class DetailsNeighbourActivity extends AppCompatActivity {
     }
 
     /**
-     * Getting all elements for details of neighbour. Uses in configureNeighbourDetail
-     */
+     * Method to get neighbour's elements.
+     * */
     private NeighbourApiService getApiService(){
         mApiService = DI.getNeighbourApiService();
         return mApiService;
@@ -134,7 +136,7 @@ public class DetailsNeighbourActivity extends AppCompatActivity {
 
     /**
      * Other tools
-     */
+     * */
     private void setFloatingActionButton(){
         if(mNeighbour.isFavorite()) {
             mFloatingActionButton.setImageResource(R.drawable.ic_star_yellow_24dp);
@@ -146,7 +148,5 @@ public class DetailsNeighbourActivity extends AppCompatActivity {
     private void toastMessage(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
-
-
 
 }

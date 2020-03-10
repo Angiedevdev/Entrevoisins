@@ -13,14 +13,12 @@ public interface NeighbourApiService {
     /**
      * Get all my Neighbours
      * @return {@link List}
-     * @return {@link DummyNeighbourApiService}
      */
     List<Neighbour> getNeighbours();
 
     /**
      * Get just my favorits neighbours
      * @return {@link List}
-     * @return {@link DummyNeighbourApiService}
      */
 
     List<Neighbour> getFavoritesNeighbours();
