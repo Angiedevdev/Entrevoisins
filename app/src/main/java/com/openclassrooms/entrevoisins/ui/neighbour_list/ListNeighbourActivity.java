@@ -17,7 +17,7 @@ public class ListNeighbourActivity extends AppCompatActivity {
 
     @BindView(R.id.tabs)
     TabLayout mTabLayout;
-    @BindView(R.id.toolbar)
+    @BindView(R.id.toolbar_activity_detail)
     Toolbar mToolbar;
     @BindView(R.id.container)
     ViewPager mViewPager;

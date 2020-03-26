@@ -1,10 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +16,6 @@ import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteFavoriteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
-import com.openclassrooms.entrevoisins.service.DummyNeighbourApiService;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -32,7 +28,6 @@ import butterknife.ButterKnife;
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final List<Neighbour> mNeighboursList;
-    private DummyNeighbourApiService mApiService;
     private String fragmentSwitch;
 
     public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, String fragmentSwitch) {
@@ -68,15 +63,16 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fragmentSwitch.equals(NeighbourFavoritesFragment.class.getName()))
+                if (fragmentSwitch.equals(NeighbourFavoritesFragment.class.getName())) {
                     EventBus.getDefault().post(new DeleteFavoriteNeighbourEvent(neighbour));
-
-                else if (fragmentSwitch.equals(NeighbourFragment.class.getName()) && neighbour.isFavorite()) {
-                    EventBus.getDefault().post(new DeleteFavoriteNeighbourEvent(neighbour));
-                    EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
-
-                } else if(fragmentSwitch.equals(NeighbourFragment.class.getName()) && !neighbour.isFavorite())
-                    EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+                } else if (fragmentSwitch.equals(NeighbourFragment.class.getName())) {
+                    if (neighbour.isFavorite()) {
+                        EventBus.getDefault().post(new DeleteFavoriteNeighbourEvent(neighbour));
+                        EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+                    } else {
+                        EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
+                    }
+                }
             }
         });
     }

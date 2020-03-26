@@ -25,21 +25,21 @@ import butterknife.ButterKnife;
 
 public class DetailsNeighbourActivity extends AppCompatActivity {
 
-    @BindView(R.id.fab_favorits)
+    @BindView(R.id.fab_detail_activity_favorite)
     FloatingActionButton mFloatingActionButton;
     @BindView(R.id.button_arrow_backward)
     ImageView mArrowBackward;
-    @BindView(R.id.photo_neighbour)
+    @BindView(R.id.image_view_activity_detail_photo_neighbour)
     ImageView mAvatarNeighbour;
-    @BindView(R.id.textView_name_neighbour)
+    @BindView(R.id.textView_detail_activity_name_neighbour_title)
     TextView mNameNeighbour;
-    @BindView(R.id.textView_name_neighbour2)
+    @BindView(R.id.textView_detail_activity_name_neighbour_card)
     TextView mNameNeighbour2;
-    @BindView(R.id.textView_adress_neighbour)
+    @BindView(R.id.textView_adress_neighbour_detail_activity_card_view)
     TextView mAdressNeighbour;
-    @BindView(R.id.textView_phone_neighbour)
+    @BindView(R.id.textView_phone_neighbour_detail_activity_card_view)
     TextView mPhoneNeighbour;
-    @BindView(R.id.textView_url_neighbour)
+    @BindView(R.id.textView_url_neighbour_detail_activity_card_view)
     TextView mURLNeighbour;
 
     private Neighbour mNeighbour;
@@ -57,7 +57,7 @@ public class DetailsNeighbourActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         configureNeighbourDetail();
-        changeStatusFavorites();
+        changeStatusFavoritesListener();
         returnHome();
     }
 
@@ -74,7 +74,7 @@ public class DetailsNeighbourActivity extends AppCompatActivity {
      * When user click on star, neighbour's status changes.
      */
 
-    public void changeStatusFavorites(){
+    public void changeStatusFavoritesListener(){
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,7 +97,7 @@ public class DetailsNeighbourActivity extends AppCompatActivity {
     }
 
     /**
-     * Specific method to add/ remove in favorite
+     * Specific method to add or remove in favorite
      */
 
     public void addInFavorites(){
@@ -114,7 +114,7 @@ public class DetailsNeighbourActivity extends AppCompatActivity {
 
     /**
      * Method to get neighbour's elements.
-     * */
+     */
     private NeighbourApiService getApiService(){
         mApiService = DI.getNeighbourApiService();
         return mApiService;
@@ -136,7 +136,7 @@ public class DetailsNeighbourActivity extends AppCompatActivity {
 
     /**
      * Other tools
-     * */
+     */
     private void setFloatingActionButton(){
         if(mNeighbour.isFavorite()) {
             mFloatingActionButton.setImageResource(R.drawable.ic_star_yellow_24dp);

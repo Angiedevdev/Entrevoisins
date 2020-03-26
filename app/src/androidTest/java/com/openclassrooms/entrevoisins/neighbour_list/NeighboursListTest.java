@@ -26,9 +26,16 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withTagValue;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.hasValue;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.IsNull.notNullValue;
 
 
@@ -42,12 +49,12 @@ public class NeighboursListTest {
     // This is fixed
     private static int ITEMS_COUNT = 12;
     private static int ITEM_POSITION = 0;
-    private static int ITEM_POSITION2 = 1;
 
     private ListNeighbourActivity mActivity;
 
     private NeighbourApiService mApiService;
     private List<Neighbour> getNeighbourList;
+    private Neighbour neighbour;
 
     @Rule
     public ActivityTestRule<ListNeighbourActivity> mActivityRule =
@@ -59,6 +66,7 @@ public class NeighboursListTest {
         assertThat(mActivity, notNullValue());
         mApiService = DI.getNewInstanceApiService();
         getNeighbourList = mApiService.getNeighbours();
+        neighbour = getNeighbourList.get(ITEM_POSITION);
     }
 
     /**
@@ -66,8 +74,12 @@ public class NeighboursListTest {
      */
     @Test
     public void myNeighboursList_shouldNotBeEmpty() {
+
+        //TODO : Passe le 24/3 à 9h50
+
         // First scroll to the position that needs to be matched and click on it.
-        onView(ViewMatchers.withId(R.id.list_neighbours))
+
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .check(matches(hasMinimumChildCount(1)));
     }
 
@@ -76,38 +88,53 @@ public class NeighboursListTest {
      */
     @Test
     public void myNeighboursList_deleteAction_shouldRemoveItem() {
+
+        //TODO : Passe le 24/3 à 9h50
+
         // Given : We remove the element at position 2
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT));
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
+                .check(withItemCount(ITEMS_COUNT));
         // When perform a click on a delete icon
-        onView(ViewMatchers.withId(R.id.list_neighbours))
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .perform(actionOnItemAtPosition(1, new DeleteViewAction()));
         // Then : the number of element is 11
-        onView(ViewMatchers.withId(R.id.list_neighbours)).check(withItemCount(ITEMS_COUNT-1));
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
+                .check(withItemCount(ITEMS_COUNT-1));
     }
 
     @Test
     public void myNeighboursList_launchDetailActivity_whenClickOnItem(){
-        //Quand je clique sur un ITEM, verifie que ma vue soit bien affichée
-        // 6/3 10h20 : erreur suivante :No activities in stage RESUMED. Did you t to launch the activity
-        //
-        onView(withId(R.id.list_neighbours)).perform(actionOnItemAtPosition(ITEM_POSITION, click()));
-        onView(withId(R.id.collapsing_layout_detail)).check(matches(isDisplayed()));
+//TODO passe à 9h56
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
+                .perform(actionOnItemAtPosition(ITEM_POSITION, click()));
+        onView(withId(R.id.toolbar_activity_detail))
+                .check(matches(isDisplayed()));
     }
 
-    @Ignore("En cours d'écriture, dois-je laisser ce test ici d'ailleurs ou nouvelle classe?")
     @Test
     public void myNeighboursList_checkIf_TextViewIsRight(){
-
+    //TODO : Passe le 24/3 à 9h50
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
+                       .perform(actionOnItemAtPosition(ITEM_POSITION, click()));
+        onView(allOf(withId(R.id.textView_detail_activity_name_neighbour_title),isDisplayed()))
+                       .check(matches(withText(neighbour.getName())));
     }
+
     @Ignore("En cours d'écriture")
     @Test
     public void myNeighboursList_checkSizeList_atClickOnButtonRemove(){
-
+    // si je clic sur le bouton de suppression la liste des user compte bien
+        // NON !! C'est bien déjà réalisé au dessus non ?? shouldremoveItem
     }
 
-    @Ignore("En cours d'écriture")
     @Test
     public void myNeighboursList_checkDisplay_fragmentFavorisIsEmptyWithNeighboursFavorites(){
+  //TODO passe le 26/3 à 10h45
 
+        onView(allOf(withContentDescription("Favorites"), isDisplayed()))
+                .check(matches(isDisplayed()));
+
+        onView(allOf(withId(R.id.list_favorites_neighbours)))
+                .check(withItemCount(1));
     }
 }
