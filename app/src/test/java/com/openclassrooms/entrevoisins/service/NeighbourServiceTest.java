@@ -1,7 +1,5 @@
 package com.openclassrooms.entrevoisins.service;
 
-import android.support.design.snackbar.ContentViewCallback;
-
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
