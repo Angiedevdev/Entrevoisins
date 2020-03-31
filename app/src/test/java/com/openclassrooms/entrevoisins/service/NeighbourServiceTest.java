@@ -11,9 +11,9 @@ import org.junit.runners.JUnit4;
 
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test on Neighbour service
@@ -22,10 +22,12 @@ import static org.junit.Assert.assertThat;
 public class NeighbourServiceTest {
 
     private NeighbourApiService service;
+    private Neighbour neighbour;
 
     @Before
     public void setup() {
         service = DI.getNewInstanceApiService();
+        neighbour = service.getNeighbours().get(0);
     }
 
     @Test
@@ -36,32 +38,29 @@ public class NeighbourServiceTest {
     }
 
     @Test
-    public void deleteNeighbourWithSuccess() {
-        Neighbour neighbourToDelete = service.getNeighbours().get(0);
-        service.deleteNeighbour(neighbourToDelete);
-        assertFalse(service.getNeighbours().contains(neighbourToDelete));
+    public void getFavoritesNeighboursWithSuccess(){
+        service.changeStatusNeighbour(neighbour);
+        assertTrue(service.getFavoritesNeighbours().contains(neighbour));
     }
 
     @Test
-    public void changeStatusOfNeighbour(){
-        Neighbour neighbour = service.getFavoritesNeighbours().get(0);
-        service.changeStatusNeighbour(neighbour);
-        assertFalse(neighbour.isFavorite());
+    public void deleteNeighbourWithSuccess() {
+        service.deleteNeighbour(neighbour);
+        assertFalse(service.getNeighbours().contains(neighbour));
     }
 
     @Test
     public void addNeighbourToFavoriteList(){
-        Neighbour neighbour = service.getNeighbours().get(0);
-        List<Neighbour> neighbourFavoritesList = service.getFavoritesNeighbours();
-        neighbourFavoritesList.add(neighbour);
-        assertThat(neighbourFavoritesList.size(), is(1));
+        neighbour = service.getNeighbours().get(1);
+        service.changeStatusNeighbour(neighbour);
+        assertTrue(service.getFavoritesNeighbours().contains(neighbour));
     }
 
     @Test
     public void removeNeighbourToFavoriteList(){
-        Neighbour neighbour = service.getNeighbours().get(0);
-        List<Neighbour> neighbourFavoritesList = service.getFavoritesNeighbours();
-        neighbourFavoritesList.remove(neighbour);
-        assertThat(neighbourFavoritesList.size(), is(1));
+        neighbour = service.getNeighbours().get(0);
+        service.changeStatusNeighbour(neighbour);
+        service.changeStatusNeighbour(neighbour);
+        assertFalse(service.getFavoritesNeighbours().contains(neighbour));
     }
 }
