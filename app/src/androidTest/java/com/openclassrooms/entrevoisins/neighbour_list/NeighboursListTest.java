@@ -24,7 +24,6 @@ import static android.support.test.espresso.contrib.RecyclerViewActions.actionOn
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static android.support.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
@@ -67,8 +66,6 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_shouldNotBeEmpty() {
 
-        // First scroll to the position that needs to be matched and click on it.
-
         onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .check(matches(hasMinimumChildCount(1)));
     }
@@ -79,13 +76,12 @@ public class NeighboursListTest {
     @Test
     public void myNeighboursList_deleteAction_shouldRemoveItem() {
 
-        // Given : We remove the element at position 2
         onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .check(withItemCount(ITEMS_COUNT));
-        // When perform a click on a delete icon
+
         onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .perform(actionOnItemAtPosition(1, new DeleteViewAction()));
-        // Then : the number of element is 11
+
         onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .check(withItemCount(ITEMS_COUNT-1));
     }
@@ -95,6 +91,7 @@ public class NeighboursListTest {
 
         onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .perform(actionOnItemAtPosition(ITEM_POSITION, click()));
+
         onView(withId(R.id.toolbar_activity_detail))
                 .check(matches(isDisplayed()));
     }
@@ -104,8 +101,8 @@ public class NeighboursListTest {
 
         onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                        .perform(actionOnItemAtPosition(ITEM_POSITION, click()));
+
         onView(allOf(withId(R.id.textView_detail_activity_name_neighbour_title),isDisplayed()))
                        .check(matches(withText(neighbour.getName())));
     }
-
 }

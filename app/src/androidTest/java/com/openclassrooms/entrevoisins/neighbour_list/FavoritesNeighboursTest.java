@@ -40,9 +40,6 @@ public class FavoritesNeighboursTest {
     private static int ITEM_POSITION = 0;
 
     private ListNeighbourActivity mActivity;
-    private NeighbourApiService mApiService;
-    private List<Neighbour> getNeighbourList;
-    private Neighbour mNeighbour;
 
     @Rule
     public ActivityTestRule<ListNeighbourActivity> mActivityRule =
@@ -52,9 +49,6 @@ public class FavoritesNeighboursTest {
     public void setUp() {
         mActivity = mActivityRule.getActivity();
         assertThat(mActivity, notNullValue());
-        mApiService = DI.getNewInstanceApiService();
-        getNeighbourList = mApiService.getNeighbours();
-        mNeighbour = getNeighbourList.get(ITEM_POSITION);
     }
 
     @Test
